@@ -8,37 +8,40 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'example_app:index' %}">Home</a>
             </li>
-            <li class="nav-item">
-              <button class="btn btn-dark" onclick="location.href=`{% url 'wishlist:logout' %}`">Logout</button>
-            </li>
-          </ul>
+        </ul>
+        <span class="navbar-text">
+            <button class="btn btn-dark" onclick="location.href=`{% url 'wishlist:logout' %}`">Logout</button>
+        </span>
         </div>
     </div>
 </nav>
 
-<table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Nama Barang</th>
-            <th scope="col">Harga Barang</th>
-            <th scope="col">Deskripsi</th>
-        </tr>
-    </thead>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
+<div class="container ">
+
+    <table class="table table-striped table-bordered my-5">
+        <thead >
+            <tr>
+                <th scope="col">Nama Barang</th>
+                <th scope="col">Harga Barang</th>
+                <th scope="col">Deskripsi</th>
+            </tr>
+        </thead>
+        {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+        {% for barang in list_barang %}
         <tr scope="row">
             <td>{{barang.nama_barang}}</td>
             <td>{{barang.harga_barang}}</td>
             <td>{{barang.deskripsi}}</td>
         </tr>
-    {% endfor %}
-</table>
-
-<p>Sesi terakhir login: {{ last_login }}</p>
-
-
+        {% endfor %}
+    </table>
+    
+    <p>Sesi terakhir login: {{ last_login }}</p>
+</div>
+    
+    
 {% endblock content %}

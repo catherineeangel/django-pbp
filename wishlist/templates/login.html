@@ -8,11 +8,11 @@
 
 <div class = "login">
 
+    <div class="container-fluid">
     <h1>Login</h1>
-
     <form method="POST" action="">
         {% csrf_token %}
-        <table>
+        <table class="space-x-5">
             <tr>
                 <td>Username: </td>
                 <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
@@ -25,9 +25,11 @@
 
         </table>
 
-            <button class="btn btn-dark" onclick="" value="login" type="submit">Login</button>
+
+            <button class="btn btn-dark" value="login" type="submit">Login</button>
         </tr>
     </form>
+
 
     {% if messages %}
         <ul>
@@ -38,7 +40,7 @@
     {% endif %}     
         
     Belum mempunyai akun? <a class="btn btn-link" href="{% url 'wishlist:register' %}">Buat Akun</a>
-
+</div>
 </div>
 
 {% endblock content %}
