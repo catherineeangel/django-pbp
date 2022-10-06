@@ -3,16 +3,17 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.core import serializers
 from django.shortcuts import render, redirect
+from wishlist.forms import CreateWishlistForm
 from wishlist.models import BarangWishlist
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-data_barang_wishlist = BarangWishlist.objects.all()
 # Create your views here.
 @login_required(login_url='/wishlist/login/')
 def show_wishlist(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
     context = {
         'list_barang': data_barang_wishlist,
         'nama': request.user.username,
@@ -21,9 +22,11 @@ def show_wishlist(request):
     return render(request, "wishlist.html", context)
 
 def show_wishlist_xml(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
     return HttpResponse(serializers.serialize("xml", data_barang_wishlist), content_type="application/xml")
 
 def show_wishlist_json(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
     return HttpResponse(serializers.serialize("json", data_barang_wishlist), content_type="application/json")
 
 def get_one_xml(request, id):
@@ -67,3 +70,26 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('wishlist:login'))
     response.delete_cookie('last_login')
     return response
+
+@login_required(login_url='/wishlist/login/')
+def show_wishlist_ajax(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
+    context = {
+        'list_barang': data_barang_wishlist,
+        'nama': request.user.username,
+        'last_login': request.COOKIES['last_login'],
+    }
+    return render(request, "wishlist_ajax.html",context)
+
+def add_wishlist_ajax(request):
+    form = CreateWishlistForm()
+
+    if request.method == "POST":
+        form = CreateWishlistForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            messages.success(request, 'Wishlist telah berhasil dibuat!')
+            return redirect('wishlist:show_wishlist_ajax')
+    
+    context = {'form':form}
+    return render(request, 'wishlist_ajax_submit.html', context)

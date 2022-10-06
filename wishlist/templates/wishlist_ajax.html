@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- buat get sm post -->
+{% block meta %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- contoh  -->
+<script>
+    $(document).ready(function(){
+        $.getJSON("{% url 'wishlist:show_wishlist_json' %}", function(data) { //ambil dari wishlist
+            $.each(data, function(key){
+                $("#wishlist-ajax").append("<tr>\
+										<td>"+data[key].fields.nama_barang+"</td>\
+										<td>"+data[key].fields.harga_barang+"</td>\
+										<td>"+data[key].fields.deskripsi+"</td>\
+										</tr>");
+                                    });
+            })
+        });
+
+    </script>
+{% endblock meta %}
+
+<div class="container ">
+
+    <table class="table table-striped table-bordered my-5" id="wishlist-ajax">
+    </table>
+
+    <p>Sesi terakhir login: {{ last_login }}</p>
+    <form method="POST" >
+        {% csrf_token %} 
+        {{ form.as_table }}
+    </form>
+
+</div>
+{% endblock content %}
