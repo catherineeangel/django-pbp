@@ -5,17 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- contoh  -->
 <script>
-    // $(document).ready(function(){
-    //     $.getJSON("{% url 'wishlist:show_wishlist_json' %}", function(data) { //ambil dari wishlist
-    //         $.each(data, function(key){
-    //             $("#wishlist-ajax").append("<tr>\
-	// 									<td>"+data[key].fields.nama_barang+"</td>\
-	// 									<td>"+data[key].fields.harga_barang+"</td>\
-	// 									<td>"+data[key].fields.deskripsi+"</td>\
-	// 									</tr>");
-    //                                 });
-    //         })
-    //     });
+  
     $("#sbtn-add").click(function(){
       $.post("{% url 'wishlist:add_wishlist_ajax' %}")
       })
