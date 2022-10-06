@@ -81,6 +81,7 @@ def show_wishlist_ajax(request):
     }
     return render(request, "wishlist_ajax.html",context)
 
+@login_required(login_url='/wishlist/login/')
 def add_wishlist_ajax(request):
     form = CreateWishlistForm()
 
@@ -91,5 +92,6 @@ def add_wishlist_ajax(request):
             messages.success(request, 'Wishlist telah berhasil dibuat!')
             return redirect('wishlist:show_wishlist_ajax')
     
-    context = {'form':form}
+    context = {'form':form,     
+        'nama': request.user.username,}
     return render(request, 'wishlist_ajax_submit.html', context)
